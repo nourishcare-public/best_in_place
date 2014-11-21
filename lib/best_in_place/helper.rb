@@ -49,6 +49,8 @@ module BestInPlace
       options[:data]['bip-object'] = opts[:param] || BestInPlace::Utils.object_to_key(real_object)
       options[:data]['bip-ok-button'] = opts[:ok_button].presence
       options[:data]['bip-ok-button-class'] = opts[:ok_button_class].presence
+      options[:data]['bip-manual-update'] = opts[:manual_update].presence
+      options[:data]['bip-new-element'] = opts[:new_element].presence
       options[:data]['bip-cancel-button'] = opts[:cancel_button].presence
       options[:data]['bip-cancel-button-class'] = opts[:cancel_button_class].presence
       options[:data]['bip-original-content'] = html_escape(opts[:value] || value).presence
@@ -118,11 +120,13 @@ module BestInPlace
     end
 
     def best_in_place_assert_arguments(args)
-      args.assert_valid_keys(:id, :type, :nil, :classes, :collection, :data,
-                             :activator, :cancel_button, :cancel_button_class, :html_attrs, :inner_class, :nil,
-                             :object_name, :ok_button, :ok_button_class, :display_as, :display_with, :path, :value,
-                             :use_confirm, :confirm, :sanitize, :raw, :helper_options, :url, :place_holder, :class,
-                             :as, :param, :container)
+      args.assert_valid_keys(
+        :id, :type, :nil, :classes, :collection, :data,
+        :activator, :cancel_button, :cancel_button_class, :html_attrs, :inner_class, :nil,
+        :object_name, :ok_button, :ok_button_class, :display_as, :display_with, :path, :value,
+        :use_confirm, :confirm, :sanitize, :raw, :helper_options, :url, :place_holder, :class,
+        :as, :param, :container, :manual_update, :new_element
+      )
 
       best_in_place_deprecated_options(args)
 
