@@ -28,9 +28,16 @@ module BestInPlace
             end
             display_value = collection[value]
             collection = collection.to_json
-          else # :select
+          when :select
             collection = best_in_place_collection_builder(type, collection)
             display_value = collection[value]
+            collection = collection.to_json
+          else # :grouped_select
+            collection = best_in_place_collection_builder(type, collection)
+            display_value = nil
+            collection.values.map(&:last).flatten(1).each do |option|
+              return display_value = option.first if option.last.to_s == value
+            end
             collection = collection.to_json
         end
         options[:data]['bip-collection'] = html_escape(collection)
@@ -177,7 +184,7 @@ module BestInPlace
             else
               fail ArgumentError, '[Best_in_place] :collection array should have 2 values'
             end
-          else # :select
+          else
             Hash[(1...collection.size+1).zip collection]
           end
         else
